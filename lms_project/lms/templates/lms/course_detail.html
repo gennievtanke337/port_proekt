@@ -1,0 +1,9 @@
+<h1>{{ course.title }}</h1>
+<p>{{ course.description }}</p>
+
+<h2>Модулі</h2>
+<ul>
+  {% for module in course.modules.all %}
+    <li>{{ module.title }}</li>
+  {% endfor %}
+</ul>
