@@ -1,9 +1,24 @@
 <h1>{{ course.title }}</h1>
 <p>{{ course.description }}</p>
 
+{% if user.is_authenticated %}
+  {% if enrolled %}
+    <p>Ви вже записані на цей курс</p>
+  {% else %}
+    <form method="post" action="{% url 'enroll_course' course.id %}">
+      {% csrf_token %}
+      <button type="submit">Записатися на курс</button>
+    </form>
+  {% endif %}
+{% else %}
+  <a href="{% url 'login' %}">Увійдіть, щоб записатися на курс</a>
+{% endif %}
+
 <h2>Модулі</h2>
 <ul>
   {% for module in course.modules.all %}
     <li>{{ module.title }}</li>
+  {% empty %}
+    <li>Модулів поки що немає</li>
   {% endfor %}
 </ul>
