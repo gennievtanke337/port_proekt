@@ -1,0 +1,36 @@
+{% load custom_tags %}
+
+
+
+<h1>{{ lesson.title }}</h1>
+<p>{{ lesson.content }}</p>
+{% if lesson.video_url %}
+  <iframe width="560" height="315" src="{{ lesson.video_url }}" frameborder="0" allowfullscreen></iframe>
+{% endif %}
+
+<h2>Завдання</h2>
+{% if enrolled %}
+  {% for assignment in lesson.assignments.all %}
+    <div>
+      <h3>{{ assignment.title }}</h3>
+      <p>{{ assignment.description }}</p>
+      <p>Дедлайн: {{ assignment.deadline }}</p>
+
+      {% if user.is_authenticated %}
+        {% if user_submissions|get_item:assignment.id %}
+          <p>Ви вже здали це завдання</p>
+        {% else %}
+          <form method="post" action="{% url 'submit_assignment' assignment.id %}">
+            {% csrf_token %}
+            <textarea name="answer" rows="4" cols="50" placeholder="Вашу відповідь тут"></textarea><br>
+            <button type="submit">Відправити</button>
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>Завдань поки що немає</p>
+  {% endfor %}
+{% else %}
+  <p>Запишіться на курс, щоб переглянути завдання</p>
+{% endif %}

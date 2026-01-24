@@ -15,9 +15,27 @@
 {% endif %}
 
 <h2>Модулі</h2>
+
 <ul>
   {% for module in course.modules.all %}
-    <li>{{ module.title }}</li>
+    <li>
+      <strong>{{ module.title }}</strong>
+
+      {% if module.lessons.all %}
+        <ul>
+          {% for lesson in module.lessons.all %}
+            <li>
+              <a href="{% url 'lesson_detail' lesson.id %}">{{ lesson.title }}</a>
+            </li>
+          {% empty %}
+            <li>Уроків поки що немає</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Уроків поки що немає</p>
+      {% endif %}
+
+    </li>
   {% empty %}
     <li>Модулів поки що немає</li>
   {% endfor %}

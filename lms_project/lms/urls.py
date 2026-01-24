@@ -7,5 +7,12 @@ urlpatterns = [
     path('course/<int:course_id>/', views.course_detail, name='course_detail'),
     path('course/<int:course_id>/enroll/', views.enroll_course, name='enroll_course'),
     path('login/', auth_views.LoginView.as_view(template_name='lms/login.html'), name='login'),
+    path('lesson/<int:lesson_id>/', views.lesson_detail, name='lesson_detail'),
+    path('module/<int:module_id>/', views.module_detail, name='module_detail'),
+    path('register/', views.register, name='register'),
+    path('assignment/<int:assignment_id>/submit/', views.submit_assignment, name='submit_assignment'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('create_lesson/<int:module_id>/', views.create_lesson, name='create_lesson'),
+    path('select_module/', views.select_module, name='select_module'),
+    path('manage_roles/', views.manage_roles, name='manage_roles'),
 ]

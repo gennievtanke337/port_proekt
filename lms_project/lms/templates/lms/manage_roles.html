@@ -1,0 +1,29 @@
+<h1>Керування ролями користувачів</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <table border="1">
+    <tr>
+      <th>Користувач</th>
+      <th>Поточна роль</th>
+      <th>Змінити роль</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{{ user.profile.role }}</td>
+      <td>
+        <select name="role_{{ user.id }}">
+          <option value="student" {% if user.profile.role == "student" %}selected{% endif %}>Student</option>
+          <option value="teacher" {% if user.profile.role == "teacher" %}selected{% endif %}>Teacher</option>
+          {% if request.user.is_superuser %}
+          <option value="admin" {% if user.profile.role == "admin" %}selected{% endif %}>Admin</option>
+          {% endif %}
+        </select>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br>
+  <button type="submit">Зберегти зміни</button>
+</form>

@@ -1,0 +1,14 @@
+<h1>{{ module.title }}</h1>
+
+<h2>Уроки</h2>
+<ul>
+  {% for lesson in module.lessons.all %}
+    <li>
+      <a href="{% url 'lesson_detail' lesson.id %}">
+        {{ lesson.title }}
+      </a>
+    </li>
+  {% empty %}
+    <li>Уроків поки що немає</li>
+  {% endfor %}
+</ul>

@@ -12,8 +12,19 @@
       {% csrf_token %}
       <button type="submit">Вийти</button>
   </form>
+
+{% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
+  <p><a href="{% url 'select_module' %}">Створити урок</a></p>
+{% endif %}
+
+
+  {% if user.is_superuser or user.profile.role == "admin" %}
+    <p><a href="{% url 'manage_roles' %}">Керувати ролями</a></p>
+  {% endif %}
+
 {% else %}
   <a href="{% url 'login' %}">Увійти</a>
+  <a href="{% url 'register' %}">Реєстрація</a>
 {% endif %}
 
 <h1>Курси</h1>

@@ -1,0 +1,15 @@
+<h1>Створити урок у модулі: {{ module.title }} (курс: {{ module.course.title }})</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <label>Назва уроку:</label>
+  <input type="text" name="title" required><br><br>
+
+  <label>Зміст:</label>
+  <textarea name="content" rows="5" cols="50" required></textarea><br><br>
+
+  <label>Посилання на відео (необов'язково):</label>
+  <input type="url" name="video_url"><br><br>
+
+  <button type="submit">Створити урок</button>
+</form>

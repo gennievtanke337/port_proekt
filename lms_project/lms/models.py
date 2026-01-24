@@ -11,10 +11,10 @@ class Profile(models.Model):
         ('admin', 'Admin'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
 
     def __str__(self):
-        return self.user.username
+        return f"{self.user.username} ({self.role})"
 
 
 class Course(models.Model):
