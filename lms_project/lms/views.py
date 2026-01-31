@@ -151,3 +151,86 @@ def select_module(request):
 def select_module(request):
     modules = Module.objects.all() 
     return render(request, 'lms/select_module.html', {'modules': modules})
+
+
+
+@login_required
+@teacher_required
+def edit_lesson(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+
+    if request.method == 'POST':
+        lesson.title = request.POST.get('title')
+        lesson.content = request.POST.get('content')
+        lesson.video_url = request.POST.get('video_url')
+        lesson.save()
+        return redirect('lesson_detail', lesson_id=lesson.id)  
+
+    return render(request, 'lms/edit_lesson.html', {'lesson': lesson})
+
+
+@login_required
+@teacher_required
+def delete_lesson(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+
+    if request.method == "POST":
+        course_id = lesson.module.course.id 
+        lesson.delete()
+        return redirect("course_detail", course_id=course_id)
+
+    return render(request, "lms/delete_lesson.html", {"lesson": lesson})
+
+
+
+
+@login_required
+@teacher_required
+def edit_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    lesson = assignment.lesson
+
+    if request.method == "POST":
+        assignment.title = request.POST.get("title")
+        assignment.description = request.POST.get("description")
+        assignment.deadline = request.POST.get("deadline")
+        assignment.save()
+        return redirect("lesson_detail", lesson_id=lesson.id)
+
+    return render(request, "lms/edit_assignment.html", {
+        "lesson": lesson,
+        "assignment": assignment
+    })
+
+
+@login_required
+@teacher_required
+def delete_assignment(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    lesson_id = assignment.lesson.id
+
+    if request.method == 'POST':
+        assignment.delete()
+        return redirect('lesson_detail', lesson_id=lesson_id)
+
+    return render(request, 'lms/delete_assignment.html', {'assignment': assignment})
+
+@login_required
+@teacher_required
+def create_assignment(request, lesson_id):
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        deadline = request.POST.get("deadline")
+
+        Assignment.objects.create(
+            lesson=lesson,
+            title=title,
+            description=description,
+            deadline=deadline
+        )
+        return redirect("lesson_detail", lesson_id=lesson.id)
+
+    return render(request, "lms/create_assignment.html", {"lesson": lesson})

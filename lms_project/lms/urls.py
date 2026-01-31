@@ -14,5 +14,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('create_lesson/<int:module_id>/', views.create_lesson, name='create_lesson'),
     path('select_module/', views.select_module, name='select_module'),
+    path('lesson/<int:lesson_id>/edit/', views.edit_lesson, name='edit_lesson'),
+    path('lesson/<int:lesson_id>/delete/', views.delete_lesson, name='delete_lesson'),
+    path('assignment/create/<int:lesson_id>/', views.create_assignment, name='create_assignment'),
+    path('assignment/edit/<int:assignment_id>/', views.edit_assignment, name='edit_assignment'),
+    path('assignment/delete/<int:assignment_id>/', views.delete_assignment, name='delete_assignment'),
     path('manage_roles/', views.manage_roles, name='manage_roles'),
 ]

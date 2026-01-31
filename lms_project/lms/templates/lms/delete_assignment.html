@@ -1,0 +1,8 @@
+<h1>Видалити завдання?</h1>
+<p>{{ assignment.title }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+    <a href="{% url 'lesson_detail' assignment.lesson.id %}">Скасувати</a>
+</form>

@@ -1,0 +1,9 @@
+<h2>Видалити урок</h2>
+
+<p>Ти впевнений, що хочеш видалити урок "{{ lesson.title }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Так, видалити</button>
+    <a href="{% url 'lesson_detail' lesson.id %}">Скасувати</a>
+</form>
