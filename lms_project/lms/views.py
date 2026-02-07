@@ -36,9 +36,18 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'lms/register.html', {'form': form})
 
+@login_required
 def home(request):
+    if request.method == "POST":
+        if request.user.is_superuser or request.user.profile.role in ["admin"]:
+            title = request.POST.get("title")
+            if title:
+                Course.objects.create(title=title)
+                return redirect("home")
+
     courses = Course.objects.all()
     return render(request, 'lms/home.html', {'courses': courses})
+
 
 def teacher_required(view_func):
     @wraps(view_func)

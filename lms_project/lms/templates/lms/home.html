@@ -15,8 +15,18 @@
 
 {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
   <p><a href="{% url 'select_module' %}">Створити урок</a></p>
-{% endif %}
 
+  <!-- Форма створення курсу -->
+  <h2>Створити новий курс</h2>
+  <form method="post" action="">
+      {% csrf_token %}
+      <p>
+          Назва курсу:
+          <input type="text" name="title" required>
+      </p>
+      <button type="submit">Створити курс</button>
+  </form>
+{% endif %}
 
   {% if user.is_superuser or user.profile.role == "admin" %}
     <p><a href="{% url 'manage_roles' %}">Керувати ролями</a></p>
