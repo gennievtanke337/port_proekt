@@ -1,0 +1,22 @@
+<h1>Оцінити відповідь</h1>
+
+<p><strong>Учень:</strong> {{ submission.student.username }}</p>
+<p><strong>Відповідь:</strong></p>
+<p>{{ submission.answer }}</p>
+
+<form method="post">
+  {% csrf_token %}
+
+  <p>
+    Оцінка (1–12):
+    <input type="number" name="score" min="1" max="12" required
+           {% if submission.grade %}value="{{ submission.grade.score }}"{% endif %}>
+  </p>
+
+  <p>
+    Коментар:
+    <textarea name="feedback" rows="4">{% if submission.grade %}{{ submission.grade.feedback }}{% endif %}</textarea>
+  </p>
+
+  <button type="submit">Зберегти</button>
+</form>

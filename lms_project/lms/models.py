@@ -60,6 +60,10 @@ class Submission(models.Model):
     answer = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('assignment', 'student')
+
+
 
 class Grade(models.Model):
     submission = models.OneToOneField(Submission, on_delete=models.CASCADE)

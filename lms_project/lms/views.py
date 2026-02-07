@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Course, Enrollment, Lesson, Module, Assignment, Submission, Profile
+from .models import Course, Enrollment, Lesson, Module, Assignment, Submission, Profile, Grade
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from functools import wraps
@@ -234,3 +234,49 @@ def create_assignment(request, lesson_id):
         return redirect("lesson_detail", lesson_id=lesson.id)
 
     return render(request, "lms/create_assignment.html", {"lesson": lesson})
+
+
+@login_required
+@teacher_required
+def assignment_submissions(request, assignment_id):
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+    submissions = Submission.objects.filter(assignment=assignment)
+
+    return render(request, 'lms/assignment_submissions.html', {
+        'assignment': assignment,
+        'submissions': submissions
+    })
+
+
+
+@teacher_required
+def grade_submission(request, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id)
+
+    
+    grade = Grade.objects.filter(submission=submission).first()
+
+    if request.method == "POST":
+        score = request.POST.get("score")
+        feedback = request.POST.get("feedback", "")
+
+        if grade:
+            grade.score = score
+            grade.feedback = feedback
+            grade.save()
+        else:
+            Grade.objects.create(
+                submission=submission,
+                score=score,
+                feedback=feedback
+            )
+
+        return redirect("lesson_detail", lesson_id=submission.assignment.lesson.id)
+
+    
+    context = {
+        "submission": submission,
+        "grade": grade
+    }
+    return render(request, "lms/grade_submission.html", context)
+

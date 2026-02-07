@@ -28,13 +28,16 @@
         {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
           <p>
             <a href="{% url 'edit_assignment' assignment.id %}">Редагувати завдання</a> |
-            <a href="{% url 'delete_assignment' assignment.id %}">Видалити завдання</a>
+            <a href="{% url 'delete_assignment' assignment.id %}">Видалити завдання</a> |
+            <a href="{% url 'assignment_submissions' assignment.id %}">
+              Переглянути відповіді учнів
+            </a>
           </p>
         {% endif %}
 
         {% if user.is_authenticated %}
           {% if user_submissions|get_item:assignment.id %}
-            <p>Ви вже здали це завдання</p>
+            <p>✅ Ви вже здали це завдання</p>
           {% else %}
             <form method="post" action="{% url 'submit_assignment' assignment.id %}">
               {% csrf_token %}

@@ -1,5 +1,13 @@
 <h1>{{ module.title }}</h1>
 
+{% if user.is_authenticated %}
+    {% if user.is_superuser or user.profile.role in "teacher admin" %}
+        <a href="{% url 'create_lesson' module.id %}" class="btn btn-primary">
+            Створити урок
+        </a>
+    {% endif %}
+{% endif %}
+
 <h2>Уроки</h2>
 <ul>
   {% for lesson in module.lessons.all %}
@@ -9,6 +17,6 @@
       </a>
     </li>
   {% empty %}
-    <li>Уроків поки що немає</li>
+    <li>У цьому модулі ще немає уроків.</li>
   {% endfor %}
 </ul>
