@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>Відповіді на: {{ assignment.title }}</h1>
 
 {% for submission in submissions %}
@@ -21,3 +26,4 @@
 {% empty %}
   <p>Ще ніхто не здав завдання</p>
 {% endfor %}
+{% endblock %}

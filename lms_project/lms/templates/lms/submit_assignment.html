@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>{{ assignment.title }}</h1>
 <p>{{ assignment.description }}</p>
 
@@ -6,3 +11,4 @@
   <textarea name="answer" rows="6" cols="60">{{ submission.answer }}</textarea><br>
   <button type="submit">Відправити</button>
 </form>
+{% endblock %}

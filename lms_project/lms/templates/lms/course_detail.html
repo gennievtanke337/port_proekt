@@ -1,18 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
+
 <h1>{{ course.title }}</h1>
 <p>{{ course.description }}</p>
 
 {% if user.is_authenticated %}
-  {% if enrolled %}
-    <p>Ви вже записані на цей курс</p>
-  {% else %}
-    <form method="post" action="{% url 'enroll_course' course.id %}">
-      {% csrf_token %}
-      <button type="submit">Записатися на курс</button>
-    </form>
-  {% endif %}
+    
+    {% if enrolled %}
+        <p>Ви вже записані на цей курс</p>
+    {% else %}
+        <form method="post" action="{% url 'enroll_course' course.id %}">
+            {% csrf_token %}
+            <button type="submit">Записатися на курс</button>
+        </form>
+    {% endif %}
+
+    {% if can_create_module %}
+        <hr>
+        <h3>Додати новий модуль</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="module_title" placeholder="Назва модуля" required>
+            <button type="submit">Створити модуль</button>
+        </form>
+    {% endif %}
+
 {% else %}
-  <a href="{% url 'login' %}">Увійдіть, щоб записатися на курс</a>
+    <a href="{% url 'login' %}">Увійдіть, щоб записатися на курс</a>
 {% endif %}
+
+<hr>
 
 <h2>Модулі курсу</h2>
 
@@ -32,3 +52,4 @@
     <li>Модулів поки що немає</li>
   {% endfor %}
 </ul>
+{% endblock %}

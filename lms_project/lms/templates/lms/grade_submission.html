@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>Оцінити відповідь</h1>
 
 <p><strong>Учень:</strong> {{ submission.student.username }}</p>
@@ -20,3 +25,4 @@
 
   <button type="submit">Зберегти</button>
 </form>
+{% endblock %}

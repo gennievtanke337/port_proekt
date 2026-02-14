@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>Виберіть модуль для створення уроку</h1>
 <ul>
   {% for module in modules %}
@@ -9,3 +14,4 @@
     <li>Модулів ще немає</li>
   {% endfor %}
 </ul>
+{% endblock %}

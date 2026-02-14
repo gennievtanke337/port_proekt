@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 {% load custom_tags %}
 
 <h1>{{ lesson.title }}</h1>
@@ -37,7 +42,7 @@
 
         {% if user.is_authenticated %}
           {% if user_submissions|get_item:assignment.id %}
-            <p>✅ Ви вже здали це завдання</p>
+            <p> Ви вже здали це завдання</p>
           {% else %}
             <form method="post" action="{% url 'submit_assignment' assignment.id %}">
               {% csrf_token %}
@@ -59,3 +64,4 @@
 {% else %}
   <p>Запишіться на курс, щоб переглянути завдання</p>
 {% endif %}
+{% endblock %}

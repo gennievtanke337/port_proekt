@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>Видалити завдання?</h1>
 <p>{{ assignment.title }}</p>
 
@@ -6,3 +11,4 @@
     <button type="submit">Так, видалити</button>
     <a href="{% url 'lesson_detail' assignment.lesson.id %}">Скасувати</a>
 </form>
+{% endblock %}

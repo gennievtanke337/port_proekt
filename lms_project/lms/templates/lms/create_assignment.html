@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h1>Створити завдання для уроку "{{ lesson.title }}"</h1>
 
 <form method="post">
@@ -13,3 +18,4 @@
 
     <button type="submit">Створити завдання</button>
 </form>
+{% endblock %}

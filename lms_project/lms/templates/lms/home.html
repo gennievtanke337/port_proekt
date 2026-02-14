@@ -1,55 +1,62 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Курси</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Курси{% endblock %}
+
+{% block content %}
+
+{% include "includes/pagination.html" %}
+
+<h1 class="mb-4">Курси</h1>
 
 {% if user.is_authenticated %}
-  <p>Привіт, {{ user.username }}!</p>
-  <form method="post" action="{% url 'logout' %}" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">Вийти</button>
-  </form>
 
-{% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
-  <p><a href="{% url 'select_module' %}">Створити урок</a></p>
+    {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
+        
+        <div class="card shadow p-4 mb-4">
+            <h4>Створити новий курс</h4>
 
-  <!-- Форма створення курсу -->
-  <h2>Створити новий курс</h2>
-  <form method="post" action="">
-      {% csrf_token %}
-      <p>
-          Назва курсу:
-          <input type="text" name="title" required>
-      </p>
-      <button type="submit">Створити курс</button>
-  </form>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text"
+                           name="title"
+                           class="form-control"
+                           placeholder="Назва курсу"
+                           required>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    Створити курс
+                </button>
+            </form>
+        </div>
+
+        <a href="{% url 'select_module' %}" class="btn btn-outline-primary mb-3">
+            Створити урок
+        </a>
+
+    {% endif %}
+
+    {% if user.is_superuser or user.profile.role == "admin" %}
+        <a href="{% url 'manage_roles' %}" class="btn btn-outline-danger mb-3">
+            Керувати ролями
+        </a>
+    {% endif %}
+
 {% endif %}
 
-  {% if user.is_superuser or user.profile.role == "admin" %}
-    <p><a href="{% url 'manage_roles' %}">Керувати ролями</a></p>
-  {% endif %}
+<div class="card shadow p-4">
+    <div class="list-group">
+        {% for course in page_obj %}
+            <a href="{% url 'course_detail' course.id %}"
+               class="list-group-item list-group-item-action">
+                {{ course.title }}
+            </a>
+        {% empty %}
+            <div class="alert alert-info">
+                Курсів ще немає 
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
-{% else %}
-  <a href="{% url 'login' %}">Увійти</a>
-  <a href="{% url 'register' %}">Реєстрація</a>
-{% endif %}
-
-<h1>Курси</h1>
-
-<ul>
-  {% for course in courses %}
-    <li>
-      <a href="{% url 'course_detail' course.id %}">
-        {{ course.title }}
-      </a>
-    </li>
-  {% empty %}
-    <li>Курсів ще немає</li>
-  {% endfor %}
-</ul>
-
-</body>
-</html>
+{% endblock %}

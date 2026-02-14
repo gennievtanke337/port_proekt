@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }}{% endblock %}
+{% block content %}
+{% include "includes/pagination.html" %}
+
 <h2>Увійти</h2>
 <form method="post">
     {% csrf_token %}
@@ -6,3 +11,4 @@
 </form>
 
 <p>Немає акаунта? <a href="{% url 'register' %}">Зареєструйтеся</a></p>
+{% endblock %}

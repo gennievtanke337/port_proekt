@@ -6,6 +6,7 @@ from functools import wraps
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 
 
@@ -13,16 +14,34 @@ from django.contrib.auth.models import User
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
+    
     enrolled = False
     if request.user.is_authenticated:
-        enrolled = Enrollment.objects.filter(user=request.user, course=course).exists()
+        enrolled = Enrollment.objects.filter(
+            user=request.user,
+            course=course
+        ).exists()
 
-    modules = course.modules.all()
+    
+    can_create_module = False
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            can_create_module = True
+        elif hasattr(request.user, "profile"):
+            if request.user.profile.role in ["teacher", "admin"]:
+                can_create_module = True
 
-    return render(request, 'lms/course_detail.html', {
-        'course': course,
-        'modules': modules,
-        'enrolled': enrolled
+    
+    if request.method == "POST" and can_create_module:
+        module_title = request.POST.get("module_title")
+        if module_title:
+            Module.objects.create(course=course, title=module_title)
+            return redirect("course_detail", course_id=course.id)
+
+    return render(request, "lms/course_detail.html", {
+        "course": course,
+        "enrolled": enrolled,
+        "can_create_module": can_create_module,
     })
 
 def register(request):
@@ -38,6 +57,7 @@ def register(request):
 
 @login_required
 def home(request):
+
     if request.method == "POST":
         if request.user.is_superuser or request.user.profile.role in ["admin"]:
             title = request.POST.get("title")
@@ -45,8 +65,16 @@ def home(request):
                 Course.objects.create(title=title)
                 return redirect("home")
 
-    courses = Course.objects.all()
-    return render(request, 'lms/home.html', {'courses': courses})
+    courses_list = Course.objects.all().order_by("-id")
+
+    paginator = Paginator(courses_list, 5)  # 🔥 5 курсів на сторінку
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "lms/home.html", {
+        "page_obj": page_obj
+    })
+
 
 
 def teacher_required(view_func):
