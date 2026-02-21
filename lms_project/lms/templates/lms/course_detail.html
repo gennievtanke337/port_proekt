@@ -52,4 +52,28 @@
     <li>Модулів поки що немає</li>
   {% endfor %}
 </ul>
+<h3 class="mt-4">Записані користувачі</h3>
+
+<ul class="list-group">
+  {% for user in enrolled_users %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ user.username }}
+
+      <span class="badge bg-secondary">
+        {% if user.is_superuser %}
+          Суперадмін
+        {% elif user.profile.role == "admin" %}
+          Адмін
+        {% elif user.profile.role == "teacher" %}
+          Вчитель
+        {% else %}
+          Учень
+        {% endif %}
+      </span>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Ніхто ще не записаний</li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

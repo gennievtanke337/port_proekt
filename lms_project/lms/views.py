@@ -14,7 +14,6 @@ from django.core.paginator import Paginator
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
-    
     enrolled = False
     if request.user.is_authenticated:
         enrolled = Enrollment.objects.filter(
@@ -22,7 +21,6 @@ def course_detail(request, course_id):
             course=course
         ).exists()
 
-    
     can_create_module = False
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -32,6 +30,10 @@ def course_detail(request, course_id):
                 can_create_module = True
 
     
+    enrolled_users = User.objects.filter(
+        enrollment__course=course
+    ).select_related("profile")
+
     if request.method == "POST" and can_create_module:
         module_title = request.POST.get("module_title")
         if module_title:
@@ -42,7 +44,9 @@ def course_detail(request, course_id):
         "course": course,
         "enrolled": enrolled,
         "can_create_module": can_create_module,
+        "enrolled_users": enrolled_users
     })
+
 
 def register(request):
     if request.method == 'POST':
@@ -81,12 +85,16 @@ def teacher_required(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
         if request.user.is_authenticated:
-            if not hasattr(request.user, 'profile'):
-                Profile.objects.create(user=request.user, role='student')
-            if request.user.profile.role in ['teacher', 'admin'] or request.user.is_superuser:
+            if request.user.is_superuser:
                 return view_func(request, *args, **kwargs)
+
+            if hasattr(request.user, "profile"):
+                if request.user.profile.role in ['teacher', 'admin']:
+                    return view_func(request, *args, **kwargs)
+
         return HttpResponseForbidden("Доступ заборонено: потрібен викладач")
     return _wrapped_view
+
 
 
 @login_required
