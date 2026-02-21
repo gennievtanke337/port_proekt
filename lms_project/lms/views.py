@@ -67,7 +67,7 @@ def home(request):
 
     courses_list = Course.objects.all().order_by("-id")
 
-    paginator = Paginator(courses_list, 5)  # 🔥 5 курсів на сторінку
+    paginator = Paginator(courses_list, 5)  
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
