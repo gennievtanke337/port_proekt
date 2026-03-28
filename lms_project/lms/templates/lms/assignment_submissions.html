@@ -7,13 +7,13 @@
 
 {% for submission in submissions %}
   <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
-    <p><strong>Учень:</strong> {{ submission.student.username }}</p>
+    <p><strong>Учень👨‍🎓:</strong> {{ submission.student.username }}</p>
     <p><strong>Відповідь:</strong></p>
     <p>{{ submission.answer }}</p>
 
     {% if submission.grade %}
       <p><strong>Оцінка:</strong> {{ submission.grade.score }}</p>
-      <p><strong>Коментар:</strong> {{ submission.grade.feedback }}</p>
+      <p><strong>Коментар💬:</strong> {{ submission.grade.feedback }}</p>
       <a href="{% url 'grade_submission' submission.id %}">
         Змінити оцінку
       </a>
@@ -24,6 +24,6 @@
     {% endif %}
   </div>
 {% empty %}
-  <p>Ще ніхто не здав завдання</p>
+  <p>Ще ніхто не здав завдання🚫</p>
 {% endfor %}
 {% endblock %}

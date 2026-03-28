@@ -4,7 +4,7 @@
 {% include "includes/pagination.html" %}
 
 <h1>
-        Редагувати завдання
+        Редагувати завдання📕
 </h1>
 
 <form method="post">
@@ -15,11 +15,11 @@
     <label>Опис:</label><br>
     <textarea name="description" rows="4" cols="50">{{ assignment.description|default_if_none:'' }}</textarea><br><br>
 
-    <label>Дедлайн:</label><br>
+    <label>Дедлайн⏳:</label><br>
     <input type="date" name="deadline" value="{{ assignment.deadline|date:'Y-m-d' }}"><br><br>
 
     <button type="submit">
-        {% if assignment %}Зберегти{% else %}Створити{% endif %}
+        {% if assignment %}Зберегти✅{% else %}Створити{% endif %}
     </button>
 </form>
 {% endblock %}

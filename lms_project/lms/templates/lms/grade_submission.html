@@ -5,7 +5,7 @@
 
 <h1>Оцінити відповідь</h1>
 
-<p><strong>Учень:</strong> {{ submission.student.username }}</p>
+<p><strong>Учень👨‍🎓:</strong> {{ submission.student.username }}</p>
 <p><strong>Відповідь:</strong></p>
 <p>{{ submission.answer }}</p>
 
@@ -19,10 +19,10 @@
   </p>
 
   <p>
-    Коментар:
+    Коментар💬:
     <textarea name="feedback" rows="4">{% if submission.grade %}{{ submission.grade.feedback }}{% endif %}</textarea>
   </p>
 
-  <button type="submit">Зберегти</button>
+  <button type="submit">Зберегти✅</button>
 </form>
 {% endblock %}

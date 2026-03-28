@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse justify-content-end">
             {% if user.is_authenticated %}
                 <span class="navbar-text me-3">
-                    Привіт, {{ user.username }} 👋
+                    <p class="text-white fs-6">Привіт, {{ user.username }}👋</p>
                 </span>
 
                 <form method="post" action="{% url 'logout' %}">

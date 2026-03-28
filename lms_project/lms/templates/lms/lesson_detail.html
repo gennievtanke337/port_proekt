@@ -14,13 +14,13 @@
 
 {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
   <p>
-    <a href="{% url 'edit_lesson' lesson.id %}">Редагувати урок</a> |
-    <a href="{% url 'delete_lesson' lesson.id %}">Видалити урок</a> |
-    <a href="{% url 'create_assignment' lesson.id %}">Створити завдання</a>
+    <a href="{% url 'edit_lesson' lesson.id %}">Редагувати урок📖</a> |
+    <a href="{% url 'delete_lesson' lesson.id %}">Видалити урок🚫</a> |
+    <a href="{% url 'create_assignment' lesson.id %}">Створити завдання📚</a>
   </p>
 {% endif %}
 
-<h2>Завдання</h2>
+<h2>Завдання📕</h2>
 
 {% if enrolled %}
   {% if lesson.assignments.exists %}
@@ -32,22 +32,22 @@
 
         {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
           <p>
-            <a href="{% url 'edit_assignment' assignment.id %}">Редагувати завдання</a> |
-            <a href="{% url 'delete_assignment' assignment.id %}">Видалити завдання</a> |
+            <a href="{% url 'edit_assignment' assignment.id %}">Редагувати завдання📖</a> |
+            <a href="{% url 'delete_assignment' assignment.id %}">Видалити завдання🚫</a> |
             <a href="{% url 'assignment_submissions' assignment.id %}">
-              Переглянути відповіді учнів
+              Переглянути відповіді учнів👨‍🎓
             </a>
           </p>
         {% endif %}
 
         {% if user.is_authenticated %}
           {% if user_submissions|get_item:assignment.id %}
-            <p> Ви вже здали це завдання</p>
+            <p> Ви вже здали це завдання✅</p>
           {% else %}
             <form method="post" action="{% url 'submit_assignment' assignment.id %}">
               {% csrf_token %}
               <textarea name="answer" rows="4" cols="50" placeholder="Ваша відповідь тут"></textarea><br>
-              <button type="submit">Відправити</button>
+              <button type="submit">Відправити➡️</button>
             </form>
           {% endif %}
         {% endif %}
@@ -55,13 +55,13 @@
     {% endfor %}
   {% else %}
     {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
-      <p>Завдань поки що немає.</p>
-      <p><a href="{% url 'create_assignment' lesson.id %}">Створити перше завдання</a></p>
+      <p>Завдань поки що немає🚫.</p>
+      <p><a href="{% url 'create_assignment' lesson.id %}">Створити перше завдання📖</a></p>
     {% else %}
-      <p>Завдань поки що немає.</p>
+      <p>Завдань поки що немає📖.</p>
     {% endif %}
   {% endif %}
 {% else %}
-  <p>Запишіться на курс, щоб переглянути завдання</p>
+  <p>Запишіться на курс, щоб переглянути завдання🚫</p>
 {% endif %}
 {% endblock %}

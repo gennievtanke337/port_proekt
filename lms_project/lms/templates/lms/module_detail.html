@@ -8,12 +8,12 @@
 {% if user.is_authenticated %}
     {% if user.is_superuser or user.profile.role in "teacher admin" %}
         <a href="{% url 'create_lesson' module.id %}" class="btn btn-primary">
-            Створити урок
+            Створити урок📖
         </a>
     {% endif %}
 {% endif %}
 
-<h2>Уроки</h2>
+<h2>Уроки📚</h2>
 <ul>
   {% for lesson in module.lessons.all %}
     <li>
@@ -22,7 +22,7 @@
       </a>
     </li>
   {% empty %}
-    <li>У цьому модулі ще немає уроків.</li>
+    <li>У цьому модулі ще немає уроків🚫.</li>
   {% endfor %}
 </ul>
 {% endblock %}
