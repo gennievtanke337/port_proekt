@@ -3,26 +3,20 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>Оцінити відповідь</h1>
+<h1 class="text-dark">Оцінити відповідь</h1>
 
-<p><strong>Учень👨‍🎓:</strong> {{ submission.student.username }}</p>
-<p><strong>Відповідь:</strong></p>
-<p>{{ submission.answer }}</p>
+<p class="text-dark"><strong>Учень👨‍🎓:</strong> {{ submission.student.username }}</p>
+<p class="text-dark">{{ submission.answer }}</p>
 
-<form method="post">
+<form method="post" style="max-width: 400px;">
   {% csrf_token %}
 
-  <p>
-    Оцінка (1–12):
-    <input type="number" name="score" min="1" max="12" required
-           {% if submission.grade %}value="{{ submission.grade.score }}"{% endif %}>
-  </p>
+  <input type="number" name="score" class="custom-input" min="1" max="12"
+         {% if submission.grade %}value="{{ submission.grade.score }}"{% endif %}>
 
-  <p>
-    Коментар💬:
-    <textarea name="feedback" rows="4">{% if submission.grade %}{{ submission.grade.feedback }}{% endif %}</textarea>
-  </p>
+  <textarea name="feedback" class="custom-textarea mt-2" rows="4">{% if submission.grade %}{{ submission.grade.feedback }}{% endif %}</textarea>
 
-  <button type="submit">Зберегти✅</button>
+  <button type="submit" class="btn-custom mt-3 w-100">Зберегти✅</button>
 </form>
+
 {% endblock %}

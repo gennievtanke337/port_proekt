@@ -18,15 +18,27 @@
         </form>
     {% endif %}
 
-    {% if can_create_module %}
-        <hr>
-        <h3>Додати новий модуль</h3>
+{% if can_create_module %}
+    <hr>
+
+    <div class="module-box">
+        <h5 class="text-black mb-3">Додати новий модуль</h5>
+
         <form method="post">
             {% csrf_token %}
-            <input type="text" name="module_title" placeholder="Назва модуля" required>
-            <button type="submit">Створити модуль</button>
+
+            <input type="text"
+                   name="module_title"
+                   class="module-input"
+                   placeholder="Назва модуля"
+                   required>
+
+            <button type="submit" class="module-btn">
+                ➕ Створити модуль
+            </button>
         </form>
-    {% endif %}
+    </div>
+{% endif %}
 
 {% else %}
     <a href="{% url 'login' %}">Увійдіть, щоб записатися на курс</a>
@@ -39,7 +51,7 @@
 <ul>
   {% for module in course.modules.all %}
     <li>
-      <a href="{% url 'module_detail' module.id %}">
+      <a href="{% url 'module_detail' module.id %}" class="custom-link">
         {{ module.title }}
       </a>
       {% if module.lessons.count > 0 %}

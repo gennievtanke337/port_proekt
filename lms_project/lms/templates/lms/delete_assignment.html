@@ -3,12 +3,13 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>Видалити завдання?🚫</h1>
-<p>{{ assignment.title }}</p>
+<h1 class="text-dark">Видалити завдання🚫</h1>
+<p class="text-dark">{{ assignment.title }}</p>
 
-<form method="post">
+<form method="post" class="mt-3">
     {% csrf_token %}
-    <button type="submit">Так, видалити✅</button>
-    <a href="{% url 'lesson_detail' assignment.lesson.id %}">Скасувати🚫</a>
+    <button type="submit" class="btn-custom">Так, видалити✅</button>
+    <a href="{% url 'lesson_detail' assignment.lesson.id %}" class="link-btn ms-2">Скасувати🚫</a>
 </form>
+
 {% endblock %}

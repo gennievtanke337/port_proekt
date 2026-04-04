@@ -1,21 +1,30 @@
 {% extends "base.html" %}
-{% block title %}{{ course.title }}{% endblock %}
+{% block title %}Створити завдання{% endblock %}
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>Створити завдання для уроку📖 "{{ lesson.title }}"</h1>
+<div class="page-container">
+
+<div class="custom-card">
+
+<h1 class="mb-4">Створити завдання 📖 "{{ lesson.title }}"</h1>
 
 <form method="post">
     {% csrf_token %}
-    <label>Назва:</label><br>
-    <input type="text" name="title" required><br><br>
 
-    <label>Опис:</label><br>
-    <textarea name="description" rows="4" cols="50" required></textarea><br><br>
+    <input type="text" name="title" class="custom-input" placeholder="Назва" required>
 
-    <label>Дедлайн⏳:</label><br>
-    <input type="date" name="deadline" required><br><br>
+    <textarea name="description" class="custom-textarea" rows="4" placeholder="Опис" required></textarea>
 
-    <button type="submit">Створити завдання📖</button>
+    <input type="date" name="deadline" class="custom-input" required>
+
+    <button type="submit" class="custom-btn mt-2">
+        Створити завдання
+    </button>
 </form>
+
+</div>
+
+</div>
+
 {% endblock %}

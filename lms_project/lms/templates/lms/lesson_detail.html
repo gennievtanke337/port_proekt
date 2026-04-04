@@ -5,49 +5,47 @@
 
 {% load custom_tags %}
 
-<h1>{{ lesson.title }}</h1>
-<p>{{ lesson.content }}</p>
+<h1 class="text-black">{{ lesson.title }}</h1>
+<p class="text-black">{{ lesson.content }}</p>
 
 {% if lesson.video_url %}
   <iframe width="560" height="315" src="{{ lesson.video_url }}" frameborder="0" allowfullscreen></iframe>
 {% endif %}
 
 {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
-  <p>
-    <a href="{% url 'edit_lesson' lesson.id %}">Редагувати урок📖</a> |
-    <a href="{% url 'delete_lesson' lesson.id %}">Видалити урок🚫</a> |
-    <a href="{% url 'create_assignment' lesson.id %}">Створити завдання📚</a>
-  </p>
+  <div class="action-links mb-3">
+    <a href="{% url 'edit_lesson' lesson.id %}" class="link-btn">Редагувати урок📖</a>
+    <a href="{% url 'delete_lesson' lesson.id %}" class="link-btn">Видалити урок🚫</a>
+    <a href="{% url 'create_assignment' lesson.id %}" class="link-btn">Створити завдання📚</a>
+  </div>
 {% endif %}
 
-<h2>Завдання📕</h2>
+<h2 class="text-black">Завдання📕</h2>
 
 {% if enrolled %}
   {% if lesson.assignments.exists %}
     {% for assignment in lesson.assignments.all %}
-      <div>
-        <h3>{{ assignment.title }}</h3>
-        <p>{{ assignment.description }}</p>
-        <p>Дедлайн: {{ assignment.deadline }}</p>
+      <div class="assignment-box">
+        <h3 class="text-black">{{ assignment.title }}</h3>
+        <p class="text-black">{{ assignment.description }}</p>
+        <p class="text-black">Дедлайн: {{ assignment.deadline }}</p>
 
         {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
-          <p>
-            <a href="{% url 'edit_assignment' assignment.id %}">Редагувати завдання📖</a> |
-            <a href="{% url 'delete_assignment' assignment.id %}">Видалити завдання🚫</a> |
-            <a href="{% url 'assignment_submissions' assignment.id %}">
-              Переглянути відповіді учнів👨‍🎓
-            </a>
-          </p>
+          <div class="action-links mb-2">
+            <a href="{% url 'edit_assignment' assignment.id %}" class="link-btn">Редагувати📖</a>
+            <a href="{% url 'delete_assignment' assignment.id %}" class="link-btn">Видалити🚫</a>
+            <a href="{% url 'assignment_submissions' assignment.id %}" class="link-btn">Відповіді👨‍🎓</a>
+          </div>
         {% endif %}
 
         {% if user.is_authenticated %}
           {% if user_submissions|get_item:assignment.id %}
-            <p> Ви вже здали це завдання✅</p>
+            <p class="text-success">Ви вже здали це завдання✅</p>
           {% else %}
             <form method="post" action="{% url 'submit_assignment' assignment.id %}">
               {% csrf_token %}
-              <textarea name="answer" rows="4" cols="50" placeholder="Ваша відповідь тут"></textarea><br>
-              <button type="submit">Відправити➡️</button>
+              <textarea name="answer" class="custom-textarea" rows="4" placeholder="Ваша відповідь тут"></textarea>
+              <button type="submit" class="btn-custom mt-2">Відправити ➡️</button>
             </form>
           {% endif %}
         {% endif %}
@@ -55,13 +53,13 @@
     {% endfor %}
   {% else %}
     {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
-      <p>Завдань поки що немає🚫.</p>
-      <p><a href="{% url 'create_assignment' lesson.id %}">Створити перше завдання📖</a></p>
+      <p class="text-black">Завдань поки що немає🚫.</p>
+      <a href="{% url 'create_assignment' lesson.id %}" class="btn-custom">➕ Створити перше завдання</a>
     {% else %}
-      <p>Завдань поки що немає📖.</p>
+      <p class="text-black">Завдань поки що немає📖.</p>
     {% endif %}
   {% endif %}
 {% else %}
-  <p>Запишіться на курс, щоб переглянути завдання🚫</p>
+  <p class="text-black">Запишіться на курс, щоб переглянути завдання🚫</p>
 {% endif %}
 {% endblock %}

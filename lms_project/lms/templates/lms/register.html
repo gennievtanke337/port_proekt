@@ -1,12 +1,35 @@
 {% extends "base.html" %}
-{% block title %}{{ course.title }}{% endblock %}
+{% block title %}Реєстрація{% endblock %}
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h2>Реєстрація</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Зареєструватися</button>
-</form>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+
+  <div class="card shadow p-4" style="width: 400px; border-radius: 15px;">
+
+    <h2 class="text-center mb-4">Реєстрація 📝</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            Зареєструватися 🚀
+        </button>
+    </form>
+
+    <p class="text-center mt-3">
+        Вже є акаунт?
+        <a href="{% url 'login' %}" style="color: #0d6efd; text-decoration: none;">
+            Увійти
+        </a>
+    </p>
+
+  </div>
+
+</div>
+
 {% endblock %}

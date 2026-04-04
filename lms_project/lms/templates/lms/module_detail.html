@@ -17,7 +17,7 @@
 <ul>
   {% for lesson in module.lessons.all %}
     <li>
-      <a href="{% url 'lesson_detail' lesson.id %}">
+      <a href="{% url 'lesson_detail' lesson.id %}" class="custom-link">
         {{ lesson.title }}
       </a>
     </li>

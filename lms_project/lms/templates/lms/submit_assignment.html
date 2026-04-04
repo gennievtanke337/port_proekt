@@ -3,12 +3,13 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>{{ assignment.title }}</h1>
-<p>{{ assignment.description }}</p>
+<h1 class="text-dark">{{ assignment.title }}</h1>
+<p class="text-dark">{{ assignment.description }}</p>
 
-<form method="post">
+<form method="post" style="max-width: 500px;">
   {% csrf_token %}
-  <textarea name="answer" rows="6" cols="60">{{ submission.answer }}</textarea><br>
-  <button type="submit">Відправити➡️</button>
+  <textarea name="answer" class="custom-textarea" rows="6">{{ submission.answer }}</textarea>
+  <button type="submit" class="btn-custom mt-3 w-100">Відправити➡️</button>
 </form>
+
 {% endblock %}

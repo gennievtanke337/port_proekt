@@ -1,14 +1,29 @@
 {% extends "base.html" %}
-{% block title %}{{ course.title }}{% endblock %}
+{% block title %}Увійти{% endblock %}
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h2>Увійти</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Увійти</button>
-</form>
+<div class="page-container">
+  <div class="custom-card">
 
-<p>Немає акаунта? <a href="{% url 'register' %}">Зареєструйтеся</a></p>
+    <h2 class="mb-4 text-center">Увійти 🔐</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="custom-btn w-100 mt-2">
+            Увійти
+        </button>
+    </form>
+
+    <p class="mt-3 text-center">
+        Немає акаунта?
+        <a href="{% url 'register' %}" class="custom-link">
+            Зареєструватися
+        </a>
+    </p>
+
+  </div>
+</div>
+
 {% endblock %}

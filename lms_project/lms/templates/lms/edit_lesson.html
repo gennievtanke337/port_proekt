@@ -3,26 +3,18 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>Редагувати урок📕</h1>
+<h1 class="text-dark">Редагувати урок📕</h1>
 
-<form method="post">
+<form method="post" style="max-width: 500px;">
     {% csrf_token %}
 
-    <p>
-        Назва:<br>
-        <input type="text" name="title" value="{{ lesson.title }}">
-    </p>
+    <input type="text" name="title" class="custom-input" value="{{ lesson.title }}">
 
-    <p>
-        Контент:<br>
-        <textarea name="content" rows="6">{{ lesson.content }}</textarea>
-    </p>
+    <textarea name="content" class="custom-textarea mt-2" rows="6">{{ lesson.content }}</textarea>
 
-    <p>
-        Відео URL📹:<br>
-        <input type="text" name="video_url" value="{{ lesson.video_url }}">
-    </p>
+    <input type="text" name="video_url" class="custom-input mt-2" value="{{ lesson.video_url }}">
 
-    <button type="submit">Зберегти✅</button>
+    <button type="submit" class="btn-custom mt-3 w-100">Зберегти✅</button>
 </form>
+
 {% endblock %}

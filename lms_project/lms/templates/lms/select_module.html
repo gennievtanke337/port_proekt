@@ -3,15 +3,17 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>Виберіть модуль для створення уроку📖</h1>
-<ul>
+<h1 class="text-dark">Виберіть модуль📖</h1>
+
+<ul class="mt-3">
   {% for module in modules %}
-    <li>
-      {{ module.course.title }} - {{ module.title }}:
-      <a href="{% url 'create_lesson' module.id %}">Створити урок📖</a>
+    <li class="mb-2">
+      {{ module.course.title }} - {{ module.title }}
+      <a href="{% url 'create_lesson' module.id %}" class="btn-custom ms-2">Створити урок📖</a>
     </li>
   {% empty %}
-    <li>Модулів ще немає🚫</li>
+    <li class="text-dark">Модулів ще немає🚫</li>
   {% endfor %}
 </ul>
+
 {% endblock %}

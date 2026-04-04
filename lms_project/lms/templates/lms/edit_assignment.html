@@ -3,23 +3,20 @@
 {% block content %}
 {% include "includes/pagination.html" %}
 
-<h1>
-        Редагувати завдання📕
-</h1>
+<h1 class="text-dark">Редагувати завдання📕</h1>
 
-<form method="post">
+<form method="post" style="max-width: 500px;">
     {% csrf_token %}
-    <label>Назва:</label><br>
-    <input type="text" name="title" value="{{ assignment.title|default_if_none:'' }}"><br><br>
 
-    <label>Опис:</label><br>
-    <textarea name="description" rows="4" cols="50">{{ assignment.description|default_if_none:'' }}</textarea><br><br>
+    <input type="text" name="title" class="custom-input" value="{{ assignment.title|default_if_none:'' }}">
 
-    <label>Дедлайн⏳:</label><br>
-    <input type="date" name="deadline" value="{{ assignment.deadline|date:'Y-m-d' }}"><br><br>
+    <textarea name="description" class="custom-textarea mt-2" rows="4">{{ assignment.description|default_if_none:'' }}</textarea>
 
-    <button type="submit">
+    <input type="date" name="deadline" class="custom-input mt-2" value="{{ assignment.deadline|date:'Y-m-d' }}">
+
+    <button type="submit" class="btn-custom mt-3 w-100">
         {% if assignment %}Зберегти✅{% else %}Створити{% endif %}
     </button>
 </form>
+
 {% endblock %}
