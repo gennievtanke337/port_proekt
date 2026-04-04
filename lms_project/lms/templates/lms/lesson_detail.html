@@ -54,7 +54,7 @@
   {% else %}
     {% if user.is_superuser or user.profile.role == "teacher" or user.profile.role == "admin" %}
       <p class="text-black">Завдань поки що немає🚫.</p>
-      <a href="{% url 'create_assignment' lesson.id %}" class="btn-custom">➕ Створити перше завдання</a>
+      <a href="{% url 'create_assignment' lesson.id %}" class="link-btn">➕ Створити перше завдання</a>
     {% else %}
       <p class="text-black">Завдань поки що немає📖.</p>
     {% endif %}
